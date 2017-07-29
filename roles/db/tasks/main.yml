@@ -6,7 +6,7 @@
     - MySQL-python
 
 - name: 2. start MariaDB
-  service: name=mariadb state=running enabled=yes
+  service: name=mariadb state=started enabled=yes
 
 - name: 3. SetSEBool
   command: setsebool -P httpd_can_network_connect_db on
