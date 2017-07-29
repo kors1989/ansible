@@ -3,6 +3,7 @@
   with_items:
     - mariadb
     - mariadb-server
+    - MySQL-python
 
 - name: 2. start MariaDB
   service: name=mariadb state=running enabled=yes
