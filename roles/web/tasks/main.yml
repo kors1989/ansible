@@ -8,7 +8,7 @@
   yum: name=php-mysql state=latest
   
 - name: 4. start Apache
-  service: name=httpd state=running enabled=yes
+  service: name=httpd state=started enabled=yes
 
 - name: 5. create the index.php file
   template: src=index.php.j2 dest=/var/www/html/index.php

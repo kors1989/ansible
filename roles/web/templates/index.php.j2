@@ -1,7 +1,7 @@
 <?php 
-$servername = {{ hostvars[host].db }};
-$username = {{ hostvars[host].dbuser }};
-$password = {{ hostvars[host].dbpassword }};
+$servername = {{ db }};
+$username = {{ dbuser }};
+$password = {{ dbpassword }};
 // Create connection
 $conn = new mysqli($servername, $username, $password);
 // Check connection
