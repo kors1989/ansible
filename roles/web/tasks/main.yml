@@ -1,0 +1,20 @@
+- name: 1. install Apache
+  yum: name=httpd state=latest
+
+- name: 2. install PHP module for Apache
+  yum: name=php state=latest
+
+- name: 3. install PHP module to work with MariaDB
+  yum: name=php-mysql state=latest
+  
+- name: 4. start Apache
+  service: name=httpd state=running enabled=yes
+
+- name: 5. create the index.php file
+  template: src=index.php.j2 dest=/var/www/html/index.php
+  
+- name: 6. open 80 port in firewall
+  command: firewall-cmd --zone=public --add-port=80/tcp --permanent
+
+- name: 7. reload firewall
+  command: firewall-cmd --reload

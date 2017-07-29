@@ -1,0 +1,20 @@
+- name: 1. install MariaDB
+  yum: name={{ item }} state=latest
+  with_items:
+    - mariadb
+    - mariadb-server
+
+- name: 2. start MariaDB
+  service: name=mariadb state=running enabled=yes
+
+- name: 3. SetSEBool
+  command: setsebool -P httpd_can_network_connect_db on
+  
+- name: 4. open 3306 port in firewall
+  command: firewall-cmd --zone=public --add-port=3306/tcp --permanent
+
+- name: 5. reload firewall
+  command: firewall-cmd --reload
+
+- name: 6. Create Application DB User
+  mysql_user: name={{ dbuser }} password={{ dbpassword }} priv=*.*:ALL host='%' state=present
