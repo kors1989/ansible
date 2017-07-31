@@ -4,13 +4,16 @@
     - mariadb
     - mariadb-server
     - MySQL-python
+    - libselinux-python
+    - libsemanage-python
 
 - name: 2. start MariaDB
   service: name=mariadb state=started enabled=yes
 
-- name: 3. SetSEBool
-  command: setsebool -P httpd_can_network_connect_db on
-  
+- name: 3. configure SELinux
+  seboolean: name=mysql_connect_any state=true persistent=yes
+  when: sestatus.rc != 0
+
 - name: 4. open 3306 port in firewall
   command: firewall-cmd --zone=public --add-port=3306/tcp --permanent
 

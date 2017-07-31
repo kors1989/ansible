@@ -6,15 +6,25 @@
 
 - name: 3. install PHP module to work with MariaDB
   yum: name=php-mysql state=latest
+
+- name: 4. install SE Linux modules
+  yum: name={{ item }} state=present
+  with_items:
+    - libsemanage-python
+    - libselinux-python
   
-- name: 4. start Apache
+- name: 5. start Apache
   service: name=httpd state=started enabled=yes
 
-- name: 5. create the index.php file
+- name: 6. create the index.php file
   template: src=index.php.j2 dest=/var/www/html/index.php
   
-- name: 6. open 80 port in firewall
+- name: 7. open 80 port in firewall
   command: firewall-cmd --zone=public --add-port=80/tcp --permanent
 
-- name: 7. reload firewall
+- name: 8. reload firewall
   command: firewall-cmd --reload
+  
+- name: 9. configure SELinux
+  seboolean: name=httpd_can_network_connect_db state=true persistent=yes
+  when: sestatus.rc != 0
