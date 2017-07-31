@@ -12,7 +12,6 @@
 
 - name: 3. configure SELinux
   seboolean: name=mysql_connect_any state=true persistent=yes
-  when: sestatus.rc != 0
 
 - name: 4. open 3306 port in firewall
   command: firewall-cmd --zone=public --add-port=3306/tcp --permanent
