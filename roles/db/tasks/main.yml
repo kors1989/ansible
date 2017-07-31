@@ -21,3 +21,6 @@
 
 - name: 6. Create Application DB User
   mysql_user: name={{ dbuser }} password={{ dbpassword }} priv=*.*:ALL host='%' state=present
+  
+- name: 7. configure SELinux
+  seboolean: name=httpd_can_network_connect_db state=true persistent=yes
