@@ -27,3 +27,6 @@
   
 - name: 9. configure SELinux
   seboolean: name=httpd_can_network_connect_db state=true persistent=yes
+  
+- name: 10. disable SELinux
+  command: setenforce 0
